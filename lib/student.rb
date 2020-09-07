@@ -1,13 +1,14 @@
 class Student
+
   attr_accessor :name, :grade
-  attr_reader :id 
-  
+  attr_reader :id
+
   def initialize (name, grade, id = nil)
     @name = name
-    @grade = grade 
+    @grade = grade
     @id = id
   end
-  
+
   def self.create_table
     sql = <<-SQL
       CREATE TABLE IF NOT EXISTS students (
@@ -18,7 +19,7 @@ class Student
     SQL
       DB[:conn].execute(sql)
   end
-  
+
   def self.drop_table
     sql = <<-SQL
       DROP TABLE students
@@ -26,20 +27,21 @@ class Student
 
     DB[:conn].execute(sql)  
   end
-  
-  def save 
+
+  def save
     sql = <<-SQL
       INSERT INTO students (name, grade)
-        VALUES(?, ?)
+        VALUES (?, ?)
     SQL
 
     DB[:conn].execute(sql, self.name, self.grade)
   end
-  
-  def self.creat(name:, grade:)
+
+  def self.create(name:, grade:)
     student = Student.new(name, grade)
     student.save
     student
   end
-  
+
+
 end
